@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SkillSwap Campus</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#e8a020; --teal:#2abfbf; --coral:#f25c54; --navy:#1a2e4a; --dark:#0f1e33; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--dark);
+    background-image:
+      radial-gradient(circle at 15% 30%, rgba(232,160,32,.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 65%, rgba(42,191,191,.10) 0%, transparent 50%);
+    min-height: 100vh;
+    display: flex;
+  }
+
+  .sidebar {
+    width: 240px;
+    background: var(--navy);
+    border-right: 3px solid var(--gold);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .sidebar h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    line-height: 1.7;
+  }
+
+  .sidebar .username {
+    color: rgba(255,255,255,.5);
+    font-size: 13px;
+  }
+
+  .sidebar h4 {
+    color: rgba(255,255,255,.4);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    background: rgba(232,160,32,.15);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 3px 0;
+  }
+
+  .main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+  }
+
+  .main h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .match-card {
+    background: var(--navy);
+    width: 280px;
+    padding: 22px;
+    border: 3px solid var(--teal);
+    box-shadow: 5px 5px 0 var(--teal);
+    position: relative;
+  }
+
+  .match-card::before {
+    content: '';
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--coral);
+    top: -3px; left: -3px;
+  }
+
+  .match-card h3 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .match-card p {
+    color: rgba(255,255,255,.55);
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .match-card p strong { color: rgba(255,255,255,.85); }
+
+  .match-card a {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 9px 18px;
+    background: var(--teal);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: 0.2s;
+  }
+  .match-card a:hover { background: #25d5d5; }
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>SKILL<br>SWAP</h2>
+    <p class="username">👤 {{ username }}</p>
+    <div>
+      <h4>My Skills</h4>
+      <div class="skill-tag">{{ matches[0].learn if matches else "—" }}</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <h2>YOUR MATCHES</h2>
+    <div class="cards">
+      {% for user in matches %}
+      <div class="match-card">
+        <h3>{{ user.name }}</h3>
+        <p><strong>Teaches:</strong> {{ user.teach }}</p>
+        <p><strong>Wants to Learn:</strong> {{ user.learn }}</p>
+        <a href="/chat/{{ username }}/{{ user.name }}">Start Chat</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>
